@@ -3,10 +3,10 @@
 # //	System Request:Debian 9+/Ubuntu 18.04+/20+
 # //	Author:	elliez
 # //	Dscription: Xray Menu Management
-# //	email: elliez667@gmail.com
-# //  telegram: https://t.me/todfix667
+# //	email: idavpnsevise@gmail.com
+# //  id line rinnahkap
 # //====================================================
-# // font color configuration | NEVERMORESSH AUTOSCRIPT
+# // font color configuration | EKROM VPNSSH AUTOSCRIPT
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 domain=$(cat /etc/xray/domain)
 PUB=$(cat /etc/slowdns/server.pub)
@@ -55,10 +55,10 @@ rm -rf /tmp/log
 rm -rf /tmp/log1
 cat >/var/www/html/ss-$user.txt <<-END
 ====================================================================
-             P R O J E C T  O F  N E V E R M O R E S S H
+             P R O J E C T  O F  E K R O M V P N  S S H
                        [Freedom Internet]
 ====================================================================
-        https://github.com/NevermoreSSH/VVV
+        https://github.com/ekromvpnSSH
 ====================================================================
               Format Shadowsocks WS (CDN)
 ====================================================================

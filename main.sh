@@ -28,7 +28,7 @@ TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
 KEY="2145515560:AAE9WqfxZzQC-FYF1VUprICGNomVfv6OdTU"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-REPO="https://raw.githubusercontent.com/NevermoreSSH/VVV/main/"
+REPO="https://raw.githubusercontent.com/ekromvpn/SSH/main/"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
 start=$(date +%s)
@@ -170,7 +170,7 @@ print_ok "Selesai pemasangan modul tambahan"
 
 
 ########## SETUP FROM HERE ##########
-           # เทพ เจฟ เจฟ  #
+           # BY EKROM VPN #
 #####################################
 echo "INSTALLING SCRIPT..."
 
@@ -178,10 +178,10 @@ touch /root/.install.log
 cat >/root/tmp <<-END
 #!/bin/bash
 #vps
-### NevermoreSSHTunnel $TANGGAL $MYIP
+### EkromvpnSSHTunnel $TANGGAL $MYIP
 END
 ####
-NEVERMORESSH() {
+EKROMVPNSSH() {
     data=($(cat /root/tmp | grep -E "^### " | awk '{print $2}'))
     for user in "${data[@]}"; do
         exp=($(grep -E "^### $user" "/root/tmp" | awk '{print $3}'))
@@ -255,7 +255,7 @@ function finish(){
     alias bash2="bash --init-file <(echo '. ~/.bashrc; unset HISTFILE')"
     clear
     echo "    ┌─────────────────────────────────────────────────────┐"
-    echo "    │       >>> แก้โดยเทพ JFEE JFEE                            │"
+    echo "    │       >>> แก้โดย ekrom vpn                           │"
     echo "    │   - Open SSH                : 443, 80, 22           │"
     echo "    │   - DNS (SLOWDNS)           : 443, 80, 53           │"
     echo "    │   - Dropbear                : 443, 109, 80          │"

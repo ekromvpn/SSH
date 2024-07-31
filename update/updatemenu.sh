@@ -37,7 +37,7 @@ echo "*/2 * * * * root logclean" >> /etc/crontab
 echo "0 3 * * * root /usr/sbin/xp" >> /etc/crontab
 echo "0 5 * * * root reboot" >> /etc/crontab
 
- fix missing & update
+# fix missing & update
 apt install htop -y 
 apt install vnstat -y 
 apt install resolvconf -y 
@@ -45,7 +45,7 @@ apt install resolvconf -y
  install UDP Custom (test)
  #wget https://raw.githubusercontent.com/ekromvpn/Vergil/main/Tunnel/udp.sh && bash udp.sh
 
- download menu
+# download menu
 cd /usr/sbin
 wget -O add-ss "${REPO}add-ss"
 wget -O add-ssh "${REPO}add-ssh"

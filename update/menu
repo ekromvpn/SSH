@@ -143,7 +143,7 @@ echo -e "\033[1;93m│  ${grenbo}19.${NC} \033[0mINSTALL UDP${NC}     ${grenbo}2
 echo -e "\033[1;93m└──────────────────────────────────────────┘\033[0m"
 echo -e ""
 echo -e "\033[1;93m┌───────────────────────────────────────────┐\033[0m"
-echo -e "\033[1;93m│\033[0m\033[0mEKROMVPNSSH${NC}(C)\033[1;94mhttps://github.com/ ${NC}\033[1;93m\033[0m"
+echo -e "\033[1;93m│\033[0m\033[0mEKROMVPNSSH${NC}(C)\033[1;94mhttps://github.com/todfix667 ${NC}\033[1;93m\033[0m"
 echo -e "\033[1;93m└───────────────────────────────────────────┘\033[0m"
 echo -e ""
 read -p "Select From Options [ 1 - 18 ] : " menu

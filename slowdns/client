@@ -1,6 +1,6 @@
 [Unit]
 Description=Client SlowDNS
-Documentation=https://github.com/NevermoreSSH/slowdns
+Documentation=https://raw.githubusercontent.com/ekromvpn/slowdns
 After=network.target nss-lookup.target
 [Service]
 Type=simple

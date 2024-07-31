@@ -37,7 +37,7 @@ cat > /var/www/html/ssh-$LOGIN.txt <<-END
              P R O J E C T  O F  N E V E R M O R E S S H
                        [Freedom Internet]
 ====================================================================
-        https://github.com/NevermoreSSH/VVV
+        https://github.com/ekromvpn/SSH
 ====================================================================
               Format SSH OVPN Account
 ====================================================================
@@ -55,7 +55,7 @@ Port OpenSSH     : 443, 80, 22
 Port Dropbear    : 443, 109
 Port Dropbear WS : 443, 109
 Port UDP-Custom  : 1-65535
-Port SSH WS      : 80
+Port SSH WS      : 8880
 Port SSH SSL WS  : 443
 Port SSL/TLS     : 443
 Port OVPN WS SSL : 443

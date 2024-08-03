@@ -31,7 +31,7 @@ TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
 KEY="2145515560:AAE9WqfxZzQC-FYF1VUprICGNomVfv6OdTU"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-REPO="https://raw.githubusercontent.com/NevermoreSSH/VVV/main/"
+REPO="https://raw.githubusercontent.com/ekromvpn/SSH/main/"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
 start=$(date +%s)
@@ -255,7 +255,7 @@ function download_config(){
     chmod 644 /etc/default/dropbear
     wget -q -O /etc/banner "${REPO}config/banner" >/dev/null 2>&1
     
-    # > Add menu, thanks to NevermoreSSH <3
+    # > Add menu, thanks to EKROMVPNSSH <3
     wget -O /tmp/menu-master.zip "${REPO}config/menu.zip" >/dev/null 2>&1
     mkdir /tmp/menu
     7z e  /tmp/menu-master.zip -o/tmp/menu/ >/dev/null 2>&1
@@ -379,7 +379,7 @@ print_ok "Selesai pemasangan modul tambahan"
 
 
 ########## SETUP FROM HERE ##########
-# ORIGINAL SCRIPT BY NEVERMORESSH   #
+# ORIGINAL SCRIPT BY EKROMVPNSSH   #
 #####################################
 echo "INSTALLING SCRIPT..."
 

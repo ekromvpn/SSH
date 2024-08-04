@@ -197,17 +197,17 @@ case $menu in
     netf
     ;;
 17)
-    wget -q -O /usr/bin/swapram "https://raw.githubusercontent.com/NevermoreSSH/swapram/main/swapram.sh" && chmod +x /usr/bin/swapram && swapram
+    wget -q -O /usr/bin/swapram "https://raw.githubusercontent.com/ekromvpn/swapram/main/swapram.sh" && chmod +x /usr/bin/swapram && swapram
     ;;
 18)
-    wget -q -O /usr/bin/xraychanger2 "https://raw.githubusercontent.com/NevermoreSSH/Xcore-custompath/main/xraychanger2.sh" && chmod +x /usr/bin/xraychanger2 && xraychanger2
+    wget -q -O /usr/bin/xraychanger2 "https://raw.githubusercontent.com/ekromvpn/Xcore-custompath/main/xraychanger2.sh" && chmod +x /usr/bin/xraychanger2 && xraychanger2
     #exit
     ;;
 19)
-    wget https://raw.githubusercontent.com/NevermoreSSH/Vergil/main/Tunnel/udp.sh && bash udp.sh
+    wget https://raw.githubusercontent.com/ekromvpn/Vergil/main/Tunnel/udp.sh && bash udp.sh
     ;;
 20)
-    wget -q -O /usr/sbin/bbr5 "https://raw.githubusercontent.com/NevermoreSSH/BBRplus/main/bbr.sh" && chmod +x /usr/sbin/bbr5 && bbr5
+    wget -q -O /usr/sbin/bbr5 "https://raw.githubusercontent.com/ekromvpn/BBRplus/main/bbr.sh" && chmod +x /usr/sbin/bbr5 && bbr5
     ;;
 *)
     menu

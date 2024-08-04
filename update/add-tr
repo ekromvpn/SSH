@@ -6,7 +6,7 @@
 # //	email: elliez667@gmail.com
 # //  telegram: https://t.me/todfix667
 # //====================================================
-# // font color configuration | NEVERMORESSH AUTOSCRIPT
+# // font color configuration | EKROMVPNSSH AUTOSCRIPT
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 domain=$(cat /etc/xray/domain)
 PUB=$(cat /etc/slowdns/server.pub)
@@ -51,7 +51,7 @@ cat >/var/www/html/trojan-$user.txt <<-END
              P R O J E C T  O F  N E V E R M O R E S S H
                        [Freedom Internet]
 ====================================================================
-        https://github.com/NevermoreSSH/VVV
+        https://github.com/ekromvpn/SSH
 ====================================================================
               Format Trojan GO/WS (CDN)
 ====================================================================

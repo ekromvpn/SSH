@@ -28,7 +28,7 @@ TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
 KEY="2145515560:AAE9WqfxZzQC-FYF1VUprICGNomVfv6OdTU"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-REPO="https://raw.githubusercontent.com/ekromvpn/SSH/main/"
+REPO="https://raw.githubusercontent.com/NevermoreSSH/VVV/main/"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
 start=$(date +%s)
@@ -140,7 +140,7 @@ function pasang_ssl() {
     mkdir /root/.acme.sh
     systemctl stop $STOPWEBSERVER
     systemctl stop nginx
-    curl https://raw.githubusercontent.com/ekromvpn/SSH/main/acme.sh -o /root/.acme.sh/acme.sh
+    curl https://raw.githubusercontent.com/NevermoreSSH/VVV/main/acme.sh -o /root/.acme.sh/acme.sh
     chmod +x /root/.acme.sh/acme.sh
     /root/.acme.sh/acme.sh --upgrade --auto-upgrade
     /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
@@ -156,7 +156,7 @@ function install_xray(){
     curl -s ipinfo.io/city >> /etc/xray/city
     curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /etc/xray/isp
     xray_latest="$(curl -s https://api.github.com/repos/dharak36/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-    xraycore_link="https://github.com/ekromvpn/Xcore-custompath/releases/download/Xray-linux-64-v1.6.5.1/Xray-linux-64-v1.6.5.1"
+    xraycore_link="https://github.com/NevermoreSSH/Xcore-custompath/releases/download/Xray-linux-64-v1.6.5.1/Xray-linux-64-v1.6.5.1"
     curl -sL "$xraycore_link" -o xray
 #    unzip -q xray.zip && rm -rf xray.zip
     mv xray /usr/sbin/xray

@@ -37,7 +37,7 @@ cat > /var/www/html/ssh-$LOGIN.txt <<-END
              P R O J E C T  O F  N E V E R M O R E S S H
                        [Freedom Internet]
 ====================================================================
-        https://github.com/NevermoreSSH/VVV
+        https://github.com/ekromvpn/SSH
 ====================================================================
               Format SSH OVPN Account
 ====================================================================

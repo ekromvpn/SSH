@@ -43,7 +43,7 @@ apt install vnstat -y
 apt install resolvconf -y 
 
 # install UDP Custom (test)
-#wget https://raw.githubusercontent.com/NevermoreSSH/Vergil/main/Tunnel/udp.sh && bash udp.sh
+#wget https://raw.githubusercontent.com/ekromvpn/Vergil/main/Tunnel/udp.sh && bash udp.sh
 
 # download menu
 cd /usr/sbin

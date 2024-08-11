@@ -37,7 +37,7 @@ cat > /var/www/html/ssh-$LOGIN.txt <<-END
              P R O J E C T  O F  N E V E R M O R E S S H
                        [Freedom Internet]
 ====================================================================
-        https://github.com/NevermoreSSH/VVV
+        https://github.com/ekromvpn/SSH
 ====================================================================
               Format SSH OVPN Account
 ====================================================================
@@ -67,7 +67,7 @@ Proxy Squid 2    : 8000
 Proxy Squid 3    : 8080
 BadVPN UDP       : 7100, 7200, 7300
 __________________________________
-Payload WSS: GET wss://BUG.COM/ HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket[crlf][crlf] 
+Payload WSS: GET HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket[crlf][crlf] 
 __________________________________
 OpenVPN WS SSL : https://$domain:81/"$domain"-ws-ssl.ovpn
 OpenVPN SSL : https://$domain:81/"$domain"-ssl.ovpn

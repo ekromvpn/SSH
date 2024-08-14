@@ -51,7 +51,7 @@ Host             : $domain
 Host Slowdns     : ${NS}
 Pub Key          : ${PUB}
 Location         : $CITY
-Port OpenSSH     : 443, 143, 22
+Port OpenSSH     : 443, 80, 22
 Port Dropbear    : 443, 109
 Port Dropbear WS : 443, 109
 Port UDP-Custom  : 1-65535
@@ -89,7 +89,7 @@ TEXT="
 <code>Host Slowdns     : ${NS}</code>
 <code>Pub Key          : ${PUB}</code>
 <code>Location         : $CITY</code>
-<code>Port OpenSSH     : 443, 143, 22</code>
+<code>Port OpenSSH     : 443, 80, 22</code>
 <code>Port Dropbear    : 443, 109</code>
 <code>Port Dropbear WS : 443, 109</code>
 <code>Port UDP-Custom  : 1-65535</code>
@@ -128,7 +128,7 @@ echo -e "Host             : $domain" | tee -a /etc/nevermoressh/user.log
 echo -e "Host Slowdns     : ${NS}" | tee -a /etc/nevermoressh/user.log
 echo -e "Pub Key          : ${PUB}" | tee -a /etc/nevermoressh/user.log
 #echo -e "Location         : $CITY" | tee -a /etc/nevermoressh/user.log
-echo -e "Port OpenSSH     : 443, 143, 22" | tee -a /etc/nevermoressh/user.log
+echo -e "Port OpenSSH     : 443, 80, 22" | tee -a /etc/nevermoressh/user.log
 echo -e "Port DNS         : 443, 53 ,22 " | tee -a /etc/nevermoressh/user.log
 echo -e "Port Dropbear    : 443, 109" | tee -a /etc/nevermoressh/user.log
 echo -e "Port Dropbear WS : 443, 109" | tee -a /etc/nevermoressh/user.log

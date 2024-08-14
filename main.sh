@@ -466,7 +466,7 @@ function finish(){
     echo "    │   - Dropbear                : 443, 109, 80          │"
     echo "    │   - Dropbear Websocket      : 443, 109              │"
     echo "    │   - SSH Websocket SSL       : 443                   │"
-    echo "    │   - SSH Websocket           : 8880                  │"
+    echo "    │   - SSH Websocket           : 80                    │"
     echo "    │   - OpenVPN SSL             : 443                   │"
     echo "    │   - OpenVPN Websocket SSL   : 443                   │"
     echo "    │   - OpenVPN TCP             : 443, 1194             │"

@@ -471,7 +471,7 @@ function finish(){
     echo "    │   - SSH Websocket           : 80                    │"
     echo "    │   - OpenVPN SSL             : 443                   │"
     echo "    │   - OpenVPN Websocket SSL   : 443                   │"
-    echo "    │   - OpenVPN TCP             : 443, 1194             │"
+    echo "    │   - OpenVPN TCP             : 9999, 1194             │"
     echo "    │   - OpenVPN UDP             : 2200                  │"
     echo "    │   - Nginx Webserver         : 443, 80, 81           │"
     echo "    │   - Haproxy Loadbalancer    : 443, 80               │"

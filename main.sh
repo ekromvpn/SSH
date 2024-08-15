@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 ### Color
 Green="\e[92;1m"
@@ -36,15 +35,14 @@ start=$(date +%s)
 secs_to_human() {
     echo "Installation time : $((${1} / 3600)) hours $(((${1} / 60) % 60)) minute's $((${1} % 60)) seconds"
 }
-
 ### Status
 function print_ok() {
     echo -e "${OK} ${BLUE} $1 ${FONT}"
 }
 function print_install() {
-    echo -e "${YELLOW} ============================================ ${FONT}"
+	echo -e "${YELLOW} ============================================ ${FONT}"
     echo -e "${YELLOW} # $1 ${FONT}"
-    echo -e "${YELLOW} ============================================ ${FONT}"
+	echo -e "${YELLOW} ============================================ ${FONT}"
     sleep 1
 }
 
@@ -54,9 +52,9 @@ function print_error() {
 
 function print_success() {
     if [[ 0 -eq $? ]]; then
-        echo -e "${Green} ============================================ ${FONT}"
+		echo -e "${Green} ============================================ ${FONT}"
         echo -e "${Green} # $1 Successfully installed"
-        echo -e "${Green} ============================================ ${FONT}"
+		echo -e "${Green} ============================================ ${FONT}"
         sleep 2
     fi
 }
@@ -67,8 +65,8 @@ function is_root() {
         print_ok "Root user Start installation process"
     else
         print_error "The current user is not the root user, please switch to the root user and run the script again"
-        exit 1
     fi
+
 }
 
 ### Change Environment System
@@ -81,25 +79,27 @@ function first_setup(){
 
     echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
     echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
+    
 }
 
 ### Update and remove packages
 function base_package() {
-    apt-get autoremove -y man-db apache2 ufw exim4 firewalld snapd* -y
+    sudo apt-get autoremove -y man-db apache2 ufw exim4 firewalld snapd* -y
     clear
     print_install "Install the required packages"
     sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
     sysctl -w net.ipv6.conf.default.disable_ipv6=1  >/dev/null 2>&1
-    apt install software-properties-common -y
-    add-apt-repository ppa:vbernat/haproxy-2.7 -y
-    apt update && apt upgrade -y
-    apt install squid nginx zip pwgen openssl netcat bash-completion  \
+    sudo apt install software-properties-common -y
+    sudo add-apt-repository ppa:vbernat/haproxy-2.7 -y
+    sudo apt update && apt upgrade -y
+    # linux-tools-common util-linux gnupg gnupg2 gnupg1  \
+    sudo apt install squid nginx zip pwgen openssl netcat bash-completion  \
     curl socat xz-utils wget apt-transport-https dnsutils socat \
     tar wget curl ruby zip unzip p7zip-full python3-pip haproxy libc6  \
     msmtp-mta ca-certificates bsd-mailx iptables iptables-persistent netfilter-persistent \
     net-tools  jq openvpn easy-rsa python3-certbot-nginx p7zip-full tuned fail2ban -y
-    apt-get clean all; apt-get autoremove -y
-    print_success "Successfully installed the required package"
+    apt-get clean all; sudo apt-get autoremove -y
+    print_ok "Successfully installed the required package"
 }
 clear
 
@@ -107,9 +107,11 @@ clear
 function dir_xray() {
     print_install "Create Xrays directory"
     mkdir -p /etc/{xray,vmess,websocket,vless,trojan,shadowsocks}
+    # mkdir -p /usr/sbin/xray/
     mkdir -p /var/log/xray/
     mkdir -p /var/www/html/
     mkdir -p /etc/nevermoressh/
+#    chmod +x /var/log/xray
     touch /var/log/xray/{access.log,error.log}
     chmod 777 /var/log/xray/*.log
     touch /etc/vmess/.vmess.db
@@ -133,17 +135,17 @@ function add_domain() {
 function pasang_ssl() {
     print_install "Installing SSL on the domain"
     domain=$(cat /root/domain)
-    STOPWEBSERVER=$(lsof -i:80 | awk 'NR==2 {print $1}')
+    STOPWEBSERVER=$(lsof -i:80 | cut -d' ' -f1 | awk 'NR==2 {print $1}')
     rm -rf /root/.acme.sh
     mkdir /root/.acme.sh
-    systemctl stop $STOPWEBSERVER || true
-    systemctl stop nginx || true
+    systemctl stop $STOPWEBSERVER
+    systemctl stop nginx
     curl https://raw.githubusercontent.com/NevermoreSSH/VVV/main/acme.sh -o /root/.acme.sh/acme.sh
     chmod +x /root/.acme.sh/acme.sh
     /root/.acme.sh/acme.sh --upgrade --auto-upgrade
     /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
     /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-    /root/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+    ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
     chmod 777 /etc/xray/xray.key
     print_success "SSL Certificate"
 }
@@ -156,11 +158,13 @@ function install_xray(){
     xray_latest="$(curl -s https://api.github.com/repos/dharak36/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
     xraycore_link="https://github.com/NevermoreSSH/Xcore-custompath/releases/download/Xray-linux-64-v1.6.5.1/Xray-linux-64-v1.6.5.1"
     curl -sL "$xraycore_link" -o xray
+#    unzip -q xray.zip && rm -rf xray.zip
     mv xray /usr/sbin/xray
     print_success "Xray Core"
     
     cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/xray.pem
     wget -O /etc/xray/config.json "${REPO}xray/config.json" >/dev/null 2>&1 
+    #wget -O /usr/sbin/xray/ "${REPO}bin/xray" >/dev/null 2>&1
     wget -O /usr/sbin/websocket "${REPO}bin/ws" >/dev/null 2>&1
     wget -O /etc/websocket/tun.conf "${REPO}xray/tun.conf" >/dev/null 2>&1 
     wget -O /etc/systemd/system/ws.service "${REPO}xray/ws.service" >/dev/null 2>&1 
@@ -479,12 +483,12 @@ function finish(){
     echo "    │   - XRAY Vless gRPC         : 443                   │"
     echo "    │   - XRAY Vless None TLS     : 80                    │"
     echo "    │   - Trojan gRPC             : 443                   │"
-    echo "    │   - Trojan WS               : 444193                   │"
+    echo "    │   - Trojan WS               : 443                   │"
     echo "    │   - Shadowsocks WS          : 443                   │"
     echo "    │   - Shadowsocks gRPC        : 443                   │"
     echo "    │                                                     │"
     echo "    │      >>> Server Information & Other Features        │"
-    echo "    │   - Autoreboot On           : $AUTOREB:00 $TIME_DATE GMT +8          │"
+    echo "    │   - Autoreboot On           : $AUTOREB:00 $TIME_DATE GMT +8        │"
     echo "    │   - Auto Delete Expired Account                     │"
     echo "    │   - Fully automatic script                          │"
     echo "    │   - VPS settings                                    │"

@@ -19,7 +19,7 @@ green='\e[0;32m'
 TANGGAL=$(date '+%Y-%m-%d')
 TIMES="10"
 NAMES=$(whoami)
-IMP="wget -q -O"    
+IMP="if ! wget -q -O"    
 CHATID="1036440597"
 LOCAL_DATE="/usr/bin/"
 MYIP=$(wget -qO- ipinfo.io/ip)
@@ -30,6 +30,7 @@ KEY="2145515560:AAE9WqfxZzQC-FYF1VUprICGNomVfv6OdTU"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 REPO="https://raw.githubusercontent.com/ekromvpn/SSH/main/"
 APT="apt-get -y install "
+if [[ ! -f /root/domain ]]; then print_error "Domain file /root/domain not found"; exit 1; fi
 domain=$(cat /root/domain)
 start=$(date +%s)
 secs_to_human() {
@@ -64,7 +65,7 @@ function is_root() {
     if [[ 0 == "$UID" ]]; then
         print_ok "Root user Start installation process"
     else
-        print_error "The current user is not the root user, please switch to the root user and run the script again"
+        print_error "The current user is not the root user, please switch to the root user and run the script again"; exit 1
     fi
 
 }
@@ -72,9 +73,9 @@ function is_root() {
 ### Change Environment System
 function first_setup(){
     timedatectl set-timezone Asia/Kuala_Lumpur
-    wget -O /etc/banner ${REPO}config/banner >/dev/null 2>&1
+    if ! wget -O /etc/banner ${REPO}config/banner >/dev/null 2>&1
     chmod +x /etc/banner
-    wget -O /etc/ssh/sshd_config ${REPO}config/sshd_config >/dev/null 2>&1
+    if ! wget -O /etc/ssh/sshd_config ${REPO}config/sshd_config >/dev/null 2>&1
     chmod 644 /etc/ssh/sshd_config
 
     echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
@@ -134,7 +135,8 @@ function add_domain() {
 ### Install SSL
 function pasang_ssl() {
     print_install "Installing SSL on the domain"
-    domain=$(cat /root/domain)
+    if [[ ! -f /root/domain ]]; then print_error "Domain file /root/domain not found"; exit 1; fi
+domain=$(cat /root/domain)
     STOPWEBSERVER=$(lsof -i:80 | cut -d' ' -f1 | awk 'NR==2 {print $1}')
     rm -rf /root/.acme.sh
     mkdir /root/.acme.sh
@@ -163,12 +165,12 @@ function install_xray(){
     print_success "Xray Core"
     
     cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/xray.pem
-    wget -O /etc/xray/config.json "${REPO}xray/config.json" >/dev/null 2>&1 
-    #wget -O /usr/sbin/xray/ "${REPO}bin/xray" >/dev/null 2>&1
-    wget -O /usr/sbin/websocket "${REPO}bin/ws" >/dev/null 2>&1
-    wget -O /etc/websocket/tun.conf "${REPO}xray/tun.conf" >/dev/null 2>&1 
-    wget -O /etc/systemd/system/ws.service "${REPO}xray/ws.service" >/dev/null 2>&1 
-    wget -q -O /etc/ipserver "${REPO}server/ipserver" && bash /etc/ipserver >/dev/null 2>&1
+    if ! wget -O /etc/xray/config.json "${REPO}xray/config.json" >/dev/null 2>&1 
+    #if ! wget -O /usr/sbin/xray/ "${REPO}bin/xray" >/dev/null 2>&1
+    if ! wget -O /usr/sbin/websocket "${REPO}bin/ws" >/dev/null 2>&1
+    if ! wget -O /etc/websocket/tun.conf "${REPO}xray/tun.conf" >/dev/null 2>&1 
+    if ! wget -O /etc/systemd/system/ws.service "${REPO}xray/ws.service" >/dev/null 2>&1 
+    if ! wget -q -O /etc/ipserver "${REPO}server/ipserver" && bash /etc/ipserver >/dev/null 2>&1
 
     # > Set Permission
     chmod +x /usr/sbin/xray
@@ -206,7 +208,7 @@ print_success "Xray C0re"
 function install_ovpn(){
     print_install "Install the Openvpn module"
     source <(curl -sL ${REPO}openvpn/openvpn)
-    wget -O /etc/pam.d/common-password "${REPO}openvpn/common-password" >/dev/null 2>&1
+    if ! wget -O /etc/pam.d/common-password "${REPO}openvpn/common-password" >/dev/null 2>&1
     chmod +x /etc/pam.d/common-password
     # > BadVPN
     source <(curl -sL ${REPO}badvpn/setup.sh)
@@ -216,7 +218,7 @@ function install_ovpn(){
 ### Install SlowDNS
 function install_slowdns(){
     print_install "Installing the SlowDNS Server module"
-    wget -q -O /tmp/nameserver "${REPO}slowdns/nameserver" >/dev/null 2>&1
+    if ! wget -q -O /tmp/nameserver "${REPO}slowdns/nameserver" >/dev/null 2>&1
     chmod +x /tmp/nameserver
     bash /tmp/nameserver | tee /root/install.log
     print_success "SlowDNS"
@@ -233,11 +235,11 @@ function pasang_rclone() {
 ### Take Config
 function download_config(){
     print_install "Install configuration package configuration"
-    wget -O /etc/haproxy/haproxy.cfg "${REPO}config/haproxy.cfg" >/dev/null 2>&1
-    wget -O /etc/nginx/conf.d/xray.conf "${REPO}config/xray.conf" >/dev/null 2>&1
+    if ! wget -O /etc/haproxy/haproxy.cfg "${REPO}config/haproxy.cfg" >/dev/null 2>&1
+    if ! wget -O /etc/nginx/conf.d/xray.conf "${REPO}config/xray.conf" >/dev/null 2>&1
     sed -i "s/xxx/${domain}/g" /etc/nginx/conf.d/xray.conf
-    wget -O /etc/nginx/nginx.conf "${REPO}config/nginx.conf" >/dev/null 2>&1
-    wget -q -O /etc/squid/squid.conf "${REPO}config/squid.conf" >/dev/null 2>&1
+    if ! wget -O /etc/nginx/nginx.conf "${REPO}config/nginx.conf" >/dev/null 2>&1
+    if ! wget -q -O /etc/squid/squid.conf "${REPO}config/squid.conf" >/dev/null 2>&1
     echo "visible_hostname $(cat /etc/xray/domain)" /etc/squid/squid.conf
     mkdir -p /var/log/squid/cache/
     chmod 777 /var/log/squid/cache/
@@ -247,12 +249,12 @@ function download_config(){
 
     # > Add Dropbear
     apt install dropbear -y
-    wget -q -O /etc/default/dropbear "${REPO}config/dropbear" >/dev/null 2>&1
+    if ! wget -q -O /etc/default/dropbear "${REPO}config/dropbear" >/dev/null 2>&1
     chmod 644 /etc/default/dropbear
-    wget -q -O /etc/banner "${REPO}config/banner" >/dev/null 2>&1
+    if ! wget -q -O /etc/banner "${REPO}config/banner" >/dev/null 2>&1
     
     # > Add menu, thanks to NevermoreSSH <3
-    wget -O /tmp/menu-master.zip "${REPO}config/menu.zip" >/dev/null 2>&1
+    if ! wget -O /tmp/menu-master.zip "${REPO}config/menu.zip" >/dev/null 2>&1
     mkdir /tmp/menu
     7z e  /tmp/menu-master.zip -o/tmp/menu/ >/dev/null 2>&1
     chmod +x /tmp/menu/*
@@ -324,7 +326,7 @@ EOF
 ### Additional
 function tambahan(){
     print_install "Installing additional modules"
-    wget -O /usr/sbin/speedtest "${REPO}bin/speedtest" >/dev/null 2>&1
+    if ! wget -O /usr/sbin/speedtest "${REPO}bin/speedtest" >/dev/null 2>&1
     chmod +x /usr/sbin/speedtest
 
     # > install gotop
@@ -419,7 +421,7 @@ function enable_services(){
     systemctl enable --now client
     systemctl enable --now server
     systemctl enable --now fail2ban
-    wget -O /root/.config/rclone/rclone.conf "${REPO}rclone/rclone.conf" >/dev/null 2>&1
+    if ! wget -O /root/.config/rclone/rclone.conf "${REPO}rclone/rclone.conf" >/dev/null 2>&1
 }
 
 function install_all() {
@@ -513,6 +515,10 @@ add_domain
 install_all
 finish  
 
-rm ~/.bash_history
-sleep 10
-reboot
+echo -ne "Would you like to reboot now? (y/n): "
+read REDDIR
+if [[ "$REDDIR" == "y" || "$REDDIR" == "Y" ]]; then
+ reboot
+else
+ exit 0
+fi

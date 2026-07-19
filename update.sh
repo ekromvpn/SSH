@@ -21,20 +21,30 @@ if [ -f /usr/sbin/version ]; then
     CURRENT_VER=$(cat /usr/sbin/version)
 fi
 
+# ถ้าใช้ --force ให้ข้ามเช็คเวอร์ชัน อัปเดตเลย
+FORCE_MODE=false
+if [ "$1" = "--force" ] || [ "$1" = "-f" ]; then
+    FORCE_MODE=true
+fi
+
 # ตรวจสอบเวอร์ชันล่าสุด
 echo -e "${YELLOW}กำลังตรวจสอบเวอร์ชันล่าสุด...${NC}"
 NEW_VER=$(curl -sS "${REPO}/version" 2>/dev/null || echo "1.0")
 
 echo -e "${WHITE}เวอร์ชันปัจจุบัน: ${GREEN}$CURRENT_VER${NC}"
 echo -e "${WHITE}เวอร์ชันล่าสุด  : ${GREEN}$NEW_VER${NC}"
-echo ""
 
-if [ "$CURRENT_VER" = "$NEW_VER" ]; then
-    echo -e "${GREEN}✅ สคริปต์เวอร์ชันล่าสุดแล้ว ไม่จำเป็นต้องอัปเดต${NC}"
-    echo ""
-    read -n 1 -s -r -p "กด Enter เพื่อกลับ..."
-    [ -f /usr/sbin/menu ] && menu
-    exit 0
+if [ "$FORCE_MODE" = false ]; then
+    if [ "$CURRENT_VER" = "$NEW_VER" ]; then
+        echo ""
+        echo -e "${GREEN}✅ สคริปต์เวอร์ชันล่าสุดแล้ว ไม่จำเป็นต้องอัปเดต${NC}"
+        echo ""
+        read -n 1 -s -r -p "กด Enter เพื่อกลับ..."
+        [ -f /usr/sbin/menu ] && menu
+        exit 0
+    fi
+else
+    echo -e "${YELLOW}⚠️ โหมดบังคับอัปเดต กำลังดำเนินการ...${NC}"
 fi
 
 echo -e "${YELLOW}⚠️ พบเวอร์ชันใหม่! กำลังอัปเดต...${NC}"

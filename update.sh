@@ -15,42 +15,19 @@ echo -e "${BLUE}            ระบบอัปเดตสคริปต์ 
 echo -e "${CYAN}============================================================${NC}"
 echo ""
 
-# ตรวจสอบเวอร์ชันปัจจุบัน
+# ตรวจสอบเวอร์ชันปัจจุบัน (แค่แสดงให้ดู ไม่ใช่เงื่อนไข)
 CURRENT_VER="1.0"
 if [ -f /usr/sbin/version ]; then
     CURRENT_VER=$(cat /usr/sbin/version)
 fi
-
-# ถ้าใช้ --force ให้ข้ามเช็คเวอร์ชัน อัปเดตเลย
-# ถ้ารันตรงๆ (ไม่มี argument) ก็ให้อัปเดตเสมอ
-FORCE_MODE=false
-if [ "$1" = "--force" ] || [ "$1" = "-f" ]; then
-    FORCE_MODE=true
-    echo -e "${YELLOW}⚠️ โหมดบังคับอัปเดต กำลังดำเนินการ...${NC}"
-fi
-
-# ตรวจสอบเวอร์ชันล่าสุด
-echo -e "${YELLOW}กำลังตรวจสอบเวอร์ชันล่าสุด...${NC}"
-NEW_VER=$(curl -sS "${REPO}/version" 2>/dev/null || echo "1.0")
+NEW_VER=$(curl -sS "${REPO}/version" 2>/dev/null || echo "$CURRENT_VER")
 
 echo -e "${WHITE}เวอร์ชันปัจจุบัน: ${GREEN}$CURRENT_VER${NC}"
 echo -e "${WHITE}เวอร์ชันล่าสุด  : ${GREEN}$NEW_VER${NC}"
+echo ""
 
-if [ "$FORCE_MODE" = false ]; then
-    if [ "$CURRENT_VER" = "$NEW_VER" ]; then
-        echo ""
-        echo -e "${GREEN}✅ สคริปต์เวอร์ชันล่าสุดแล้ว ไม่จำเป็นต้องอัปเดต${NC}"
-        echo ""
-        read -n 1 -s -r -p "กด Enter เพื่อกลับ..."
-        [ -f /usr/sbin/menu ] && menu
-        exit 0
-    fi
-else
-    echo -e "${YELLOW}⚠️ โหมดบังคับอัปเดต กำลังดำเนินการ...${NC}"
-fi
-
-echo -e "${YELLOW}⚠️ พบเวอร์ชันใหม่! กำลังอัปเดต...${NC}"
-sleep 1
+# บังคับอัปเดตทุกครั้ง ไม่เช็คเวอร์ชัน
+echo -e "${YELLOW}⚠️ กำลังดาวน์โหลดเมนูเวอร์ชันล่าสุด...${NC}"
 
 # Backup เมนูเก่า
 BACKUP_DIR="/root/menu-backup-$(date +%Y%m%d-%H%M%S)"

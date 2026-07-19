@@ -22,9 +22,11 @@ if [ -f /usr/sbin/version ]; then
 fi
 
 # ถ้าใช้ --force ให้ข้ามเช็คเวอร์ชัน อัปเดตเลย
+# ถ้ารันตรงๆ (ไม่มี argument) ก็ให้อัปเดตเสมอ
 FORCE_MODE=false
 if [ "$1" = "--force" ] || [ "$1" = "-f" ]; then
     FORCE_MODE=true
+    echo -e "${YELLOW}⚠️ โหมดบังคับอัปเดต กำลังดำเนินการ...${NC}"
 fi
 
 # ตรวจสอบเวอร์ชันล่าสุด
